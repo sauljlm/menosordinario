@@ -11,13 +11,17 @@ claudinary.config({
 });
 
 router.get('/', async (req, res) => {
-    // const images = await Image.find();
-    // console.log(images);
-    res.render('images');
+    const images = await Image.find(); // get from mongodb
+    console.log(images);
+    res.render('images', {images});
+    // res.setHeader('Access-Control-Allow-Origin', '*');
+    // res.json(images);
 });
 
-router.get('/images/add', (req, res) => {
-    res.render('image_form'); 
+router.get('/images/add',  async (req, res) => {
+    const images = await Image.find();
+    
+    res.render('image_form', {images}); // render handlebards html
 });
 
 router.post('/images/add', async (req, res) => {
@@ -32,15 +36,15 @@ router.post('/images/add', async (req, res) => {
     });
     await newPhoto.save();
     await fs.unlink(req.file.path); // delete local file
-    res.send('Recibed');
+    res.redirect('/');
 });
 
-router.get('/image/:id', (req, res) => {
-    res.send('Profile image');
-});
-
-router.get('/image/:id/delete', (req, res) => {
-    res.send('Image deleted');
+router.get('/images/delete/:id', async (req, res) => {
+    const { img_id } = req.params;
+    const image = await Image.findByIdAndDelete(img_id);
+    const result = await claudinary.v2.uploader.destroy(image.public_id);
+    console.log(result);
+    res.redirect('/images/add');
 });
 
 module.exports = router;
