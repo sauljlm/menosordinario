@@ -24,7 +24,7 @@ app.set('view engine', '.hbs');
 //middlewares
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.urlencoded({extended: false})); //helps to understand the inputs like strings/texts
+app.use(express.urlencoded({extended: false})); //helps to understand the inputs like strings/texts 
 const storage = multer.diskStorage({
     destination: path.join(__dirname, 'public/uploads'),
     filename: (req, file, cb, filename) => {

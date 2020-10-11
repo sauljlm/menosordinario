@@ -1,6 +1,14 @@
 const { Schema, model} = require('mongoose');
 
 const imageSchema = new Schema({
+    title: String,
+    description: String,
+    imageURL: String,
+    public_id: String
+});
+
+/*
+const imageSchema = new Schema({
     title: { type: String},
     description: { type: String},
     filename: { type: String},
@@ -10,5 +18,6 @@ const imageSchema = new Schema({
     size: { type: Number},
     created_at: { type: Date, default: Date.now()}
 });
+*/
 
 module.exports = model('Image', imageSchema);
