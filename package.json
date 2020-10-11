@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/sauljlm/menosordinario#readme",
   "dependencies": {
+    "@handlebars/allow-prototype-access": "^1.0.3",
     "cloudinary": "^1.23.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
@@ -30,6 +31,7 @@
     "timeago.js": "^4.0.2"
   },
   "devDependencies": {
+    "handlebars": "^4.5.0",
     "nodemon": "^2.0.4"
   }
 }

@@ -12,10 +12,7 @@ claudinary.config({
 
 router.get('/', async (req, res) => {
     const images = await Image.find(); // get from mongodb
-    console.log(images);
-    res.render('images', {images});
-    // res.setHeader('Access-Control-Allow-Origin', '*');
-    // res.json(images);
+    res.render('images', { images });
 });
 
 router.get('/images/add',  async (req, res) => {
@@ -40,10 +37,9 @@ router.post('/images/add', async (req, res) => {
 });
 
 router.get('/images/delete/:id', async (req, res) => {
-    const { img_id } = req.params;
-    const image = await Image.findByIdAndDelete(img_id);
+    const { id } = req.params;
+    const image = await Image.findByIdAndDelete(id);
     const result = await claudinary.v2.uploader.destroy(image.public_id);
-    console.log(result);
     res.redirect('/images/add');
 });
 

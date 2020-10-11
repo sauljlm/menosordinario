@@ -2,9 +2,10 @@ const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
 const multer = require('multer');
+const handlebars = require('handlebars');
 const exphbs = require('express-handlebars');
 const imageName = require('./utilities');
-const { format } = require('timeago.js');
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 
 //inicialitations
 const app = express();
@@ -17,6 +18,7 @@ app.engine('.hbs', exphbs({ // handlebars configuration
     defaultLayout: 'main',
     layoutsDir: path.join(app.get('views'), 'layouts'),
     partialsDir: path.join(app.get('views'), 'partials'),
+    handlebars: allowInsecurePrototypeAccess(handlebars),
     extname: '.hbs'
 }));
 app.set('view engine', '.hbs');
@@ -36,10 +38,6 @@ app.use(multer({
 }).single('image')); //say it thet I will push only one image with the input image
 
 //global variables
-app.use((req, res, next) => {
-    app.locals.format = format;
-    next();
-}); // to format dates
 
 //routes
 app.use(require('./routes/index'));
